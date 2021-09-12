@@ -8,7 +8,7 @@ workflows:
   sample:
     jobs:
       - build
-          context: sonarcloud
+          context: $sonarcloud
 
 jobs:
   build:
