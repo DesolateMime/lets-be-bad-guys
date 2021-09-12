@@ -23,4 +23,4 @@ jobs:
       - sonarcloud/scan
       - run:
           name: Echo Done
-          command: echo "Done."
+          command: echo "Done." 
