@@ -8,7 +8,7 @@ workflows:
   sample:
     jobs:
       - build:
-          context: sonarcloud
+          context: SonarCloud
 
 jobs:
   build:
@@ -19,9 +19,8 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-      - sonarcloud/scan:
-          cache_version: 1
-          sonar_token_variable_name: SONAR_CLOUD_TOKEN
+      # Scan our project in sonarcloud.
+      - sonarcloud/scan
       - run:
           name: Echo Done
           command: echo "Done."
