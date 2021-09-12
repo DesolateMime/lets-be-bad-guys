@@ -7,8 +7,8 @@ orbs:
 workflows:
   sample:
     jobs:
-      - build
-          context: $sonarcloud
+      - build:
+          context: sonarcloud
 
 jobs:
   build:
