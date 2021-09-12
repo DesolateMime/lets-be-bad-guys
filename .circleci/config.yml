@@ -21,7 +21,7 @@ jobs:
           pkg-manager: pip
       - sonarcloud/scan:
           cache_version: 1
-          sonar_token_variable_name: $SONAR_CLOUD_TOKEN
+          sonar_token_variable_name: SONAR_CLOUD_TOKEN
       - run:
           name: Echo Done
           command: echo "Done."
