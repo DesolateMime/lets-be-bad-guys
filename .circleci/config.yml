@@ -2,13 +2,11 @@ version: 2.1
 
 orbs:
   python: circleci/python@1.2
-  sonarcloud: sonarsource/sonarcloud@1.0.2
 
 workflows:
   sample:
     jobs:
       - build:
-          context: SonarCloud
 
 jobs:
   build:
@@ -19,8 +17,6 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-      # Scan our project in sonarcloud.
-      - sonarcloud/scan
       - run:
           name: Echo Done
           command: echo "Done."
