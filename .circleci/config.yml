@@ -6,7 +6,9 @@ orbs:
 workflows:
   sample:
     jobs:
-      - build
+      - build:
+          # Use the Snyk context that contains our Snyk auth token.
+          context: Snyk
 
 jobs:
   build:
@@ -17,6 +19,12 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
+      - snyk/scan:
+          fail-on-issues: false
+          monitor-on-build: true
+          project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-app'
+          severity-threshold: high
+          token-variable: API_TOKEN
       - run:
           name: Echo Done
           command: echo "Done."
