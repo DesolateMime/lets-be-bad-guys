@@ -25,7 +25,7 @@ jobs:
           monitor-on-build: true
           project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-app'
           severity-threshold: high
-          token-variable: API_TOKEN
+          token-variable: SNYK_TOKEN
       - run:
           name: Echo Done
           command: echo "Done."
