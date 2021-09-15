@@ -1,24 +1,34 @@
-version: '2.1'
+version: 2.1
+
 orbs:
-  snyk: snyk/snyk@x.y.z
+  python: circleci/python@1.2
+  # Use the Snyk orb.
+  snyk: snyk/snyk@1.1.1
+
+workflows:
+  sample:
+    jobs:
+      - build:
+          # Use the Snyk context that contains our Snyk auth token SYK_TOKEN.
+          context: Snyk
+
 jobs:
   build:
     docker:
-      - image: 'circleci/buildpack-deps:stretch'
-    environment:
-      IMAGE_NAME: myrepo/myapp
+      - image: cimg/python:3.8
+
     steps:
       - checkout
-      - setup_remote_docker
-      - run:
-          command: 'docker build -t $IMAGE_NAME:latest .'
-          name: Build Docker image
+      - python/install-packages:
+          pkg-manager: pip
+      # Snyk scan with passed in params. Notice the usage of auth token SNYK_TOKEN.
       - snyk/scan:
-          docker-image-name: '$IMAGE_NAME:latest'
           fail-on-issues: false
           monitor-on-build: true
-          project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-container'
+          project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-app'
           severity-threshold: high
-          target-file: Dockerfile
           token-variable: SNYK_TOKEN
-workflows: null
+          organization: '${SNYK_CICD_ORGANIZATION}'
+      - run:
+          name: Echo Done
+          command: echo "Done."
