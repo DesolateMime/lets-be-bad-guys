@@ -9,7 +9,7 @@ workflows:
   scan-my-commits:
     jobs:
       - build
-      - ggshield/scan:          # Use GitGuardian to scan for secrets.
+      - ggshield/scan || true:          # Use GitGuardian to scan for secrets.
           context: GitGuardian  # Use our created GitGuardian context which holds GITGUARDIAN_API_KEY
           name: Demo-App-Scan   # Best practice is to name each orb job
           base_revision: << pipeline.git.base_revision >>
