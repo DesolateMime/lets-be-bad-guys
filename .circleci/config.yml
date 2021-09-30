@@ -4,28 +4,24 @@ orbs:
   python: circleci/python@1.2
   # Use the GitGuardian shield orb.
   ggshield: gitguardian/ggshield@1.1.0
-
+  
 workflows:
-  sample:
+  scan-my-commits:
     jobs:
-      - build:
-          # Use the GitGuardian context that contains our GitGuardian API token GITGUARDIAN_API_KEY.
-          context: GitGuardian
+      - build
+      - ggshield/scan:          # Use GitGuardian to scan for secrets.
+          name: Demo-App-Scan   # Best practice is to name each orb job
+          base_revision: << pipeline.git.base_revision >>
+          revision: <<pipeline.git.revision>>
 
 jobs:
   build:
     docker:
       - image: cimg/python:3.8
-
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-      # GitGuardian scan. With the defined context, GITGUARDIAN_API_KEY is used.
-      - ggshield/scan:
-          name: ggshield-scan # Best practice is to name each orb job
-          base_revision: << pipeline.git.base_revision >>
-          revision: <<pipeline.git.revision>>
       - run:
           name: Echo Done
           command: echo "Done."
