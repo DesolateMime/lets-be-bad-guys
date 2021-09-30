@@ -23,7 +23,7 @@ jobs:
           pkg-manager: pip
       # GitGuardian scan. With the defined context, GITGUARDIAN_API_KEY is used.
       - ggshield/scan:
-          name: Demo-Scan # Best practice is to name each orb job
+          name: ggshield-scan # Best practice is to name each orb job
           base_revision: << pipeline.git.base_revision >>
           revision: <<pipeline.git.revision>>
       - run:
