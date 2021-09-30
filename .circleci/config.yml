@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   python: circleci/python@1.2
   # Use the GitGuardian shield orb.
-  ggshield: gitguardian/ggshield@volatile
+  ggshield: gitguardian/ggshield@1.1.0
 
 workflows:
   sample:
