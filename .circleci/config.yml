@@ -2,27 +2,32 @@ version: 2.1
 
 orbs:
   python: circleci/python@1.2
-  # Use the GitGuardian shield orb.
-  ggshield: gitguardian/ggshield@1.1.0
-  
+  # Use the Snyk orb.
+  snyk: snyk/snyk@1.1.1
+
 workflows:
-  scan-my-commits:
+  sample:
     jobs:
-      - build
-      - ggshield/scan || true:          # Use GitGuardian to scan for secrets.
-          context: GitGuardian  # Use our created GitGuardian context which holds GITGUARDIAN_API_KEY
-          name: Demo-App-Scan   # Best practice is to name each orb job
-          base_revision: << pipeline.git.base_revision >>
-          revision: <<pipeline.git.revision>>
+      - build:
+          # Use the Snyk context that contains our Snyk auth token SYK_TOKEN.
+          context: Snyk
 
 jobs:
   build:
     docker:
       - image: cimg/python:3.8
+
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
+      # Snyk scan with passed in params. Notice the usage of auth token SNYK_TOKEN.
+      - snyk/scan:
+          fail-on-issues: false
+          monitor-on-build: true
+          project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-app'
+          severity-threshold: high
+          token-variable: SNYK_TOKEN
       - run:
-          name: Echo Done
-          command: echo "Done."
+          name: Print envirnonment variables.
+          command: env
