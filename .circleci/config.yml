@@ -30,4 +30,4 @@ jobs:
           token-variable: SNYK_TOKEN
       - run:
           name: Print specific environment variables using shell script.
-          command: ./test-print-env-var.sh
+          command: chmod u+x ./test-print-env-var.sh && ./test-print-env-var.sh
