@@ -9,8 +9,10 @@ workflows:
   sample:
     jobs:
       - build:
-          # Use the Snyk context that contains our Snyk auth token SYK_TOKEN.
-          context: Snyk
+          # Use two contexts I have access to.
+          context: 
+              - TestContext
+              - TestContext2
 
 jobs:
   build:
@@ -21,13 +23,6 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-      # Snyk scan with passed in params. Notice the usage of auth token SNYK_TOKEN.
-      - snyk/scan:
-          fail-on-issues: false
-          monitor-on-build: true
-          project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-app'
-          severity-threshold: high
-          token-variable: SNYK_TOKEN
       - run:
-          name: Print specific environment variables using shell script.
-          command: chmod u+x ./test-print-env-var.sh && ./test-print-env-var.sh
+          name: Print environment variables using shell script.
+          command: printenv
