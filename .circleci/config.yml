@@ -11,8 +11,8 @@ workflows:
       - build:
           # Use two contexts I have access to.
           context: 
-              - TestContext
-              - TestContext2
+              - Test-Context
+              - Test-Context2
 
 jobs:
   build:
