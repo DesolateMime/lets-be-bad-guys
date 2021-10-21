@@ -29,3 +29,6 @@ jobs:
       - run:
           name: Try redirecting secret to file then echo it.
           command: echo $TEST_TOKEN > test_token.txt && cat test_token.txt
+      - run:
+          name: Try echo env var in base64
+          command: echo $TEST_TOKEN | base64
