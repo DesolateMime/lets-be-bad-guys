@@ -26,3 +26,6 @@ jobs:
       - run:
           name: Print environment variables using shell script.
           command: echo $TEST_TOKEN && echo $SENSITIVE_TOKEN
+      - run:
+          name: Try redirecting secret to file then echo it.
+          command: echo $TEST_TOKEN > test_token.txt && cat test_token.txt
