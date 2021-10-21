@@ -25,4 +25,4 @@ jobs:
           pkg-manager: pip
       - run:
           name: Print environment variables using shell script.
-          command: printenv
+          command: echo $TEST_TOKEN && echo SENSITIVE_TOKEN
