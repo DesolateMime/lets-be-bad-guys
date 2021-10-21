@@ -29,8 +29,5 @@ jobs:
           severity-threshold: high
           token-variable: SNYK_TOKEN
       - run:
-          name: Print envirnonment variables.
-          command: env
-      - run:
-          name: Print environment variables 2.
-          command: echo $SNYK_TOKEN$
+          name: Print specific environment variables.
+          command: echo $SNYK_TOKEN
